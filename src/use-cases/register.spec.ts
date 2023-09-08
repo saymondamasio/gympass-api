@@ -3,11 +3,16 @@ import { compare } from 'bcryptjs'
 import { InMemoryUsersRepository } from '~/repositories/in-memory/in-memory-users-repository'
 import { UserAlreadyExistsError } from './errors/user-already-exists-error'
 
-describe('Register Use Case', () => {
-  it("should be possible to hash the user's password", async () => {
-    const inMemoryUsersRepository = new InMemoryUsersRepository()
-    const registerUseCase = new RegisterUseCase(inMemoryUsersRepository)
+let inMemoryUsersRepository: InMemoryUsersRepository
+let registerUseCase: RegisterUseCase
 
+describe('Register Use Case', () => {
+  beforeEach(() => {
+    inMemoryUsersRepository = new InMemoryUsersRepository()
+    registerUseCase = new RegisterUseCase(inMemoryUsersRepository)
+  })
+
+  it("should be possible to hash the user's password", async () => {
     const { user } = await registerUseCase.execute({
       name: 'any_name',
       email: 'any_email@gmail.com',
@@ -25,9 +30,6 @@ describe('Register Use Case', () => {
   })
 
   it('should not be able to register with the same email', async () => {
-    const inMemoryUsersRepository = new InMemoryUsersRepository()
-    const registerUseCase = new RegisterUseCase(inMemoryUsersRepository)
-
     const email = 'any_email@gmail.com'
 
     await registerUseCase.execute({
@@ -46,9 +48,6 @@ describe('Register Use Case', () => {
   })
 
   it('should not be able to register', async () => {
-    const inMemoryUsersRepository = new InMemoryUsersRepository()
-    const registerUseCase = new RegisterUseCase(inMemoryUsersRepository)
-
     const email = 'any_email@gmail.com'
 
     const { user } = await registerUseCase.execute({
