@@ -2,6 +2,8 @@ import { InMemoryGymsRepository } from '~/repositories/in-memory/in-memory-gyms-
 import { CheckInUseCase } from './check-in'
 import { InMemoryCheckInsRepository } from '~/repositories/in-memory/in-memory-check-ins-repository'
 import { Gym } from '@prisma/client'
+import { MaxNumberOfCheckInsError } from './errors/max-numbers-of-check-ins-error'
+import { MaxDistanceError } from './errors/max-distance-error'
 
 let inMemoryCheckInsRepository: InMemoryCheckInsRepository
 let inMemoryGymsInsRepository: InMemoryGymsRepository
@@ -59,7 +61,7 @@ describe('Check-in Use Case', () => {
         userLatitude: 0,
         userLongitude: 0,
       }),
-    ).rejects.toBeInstanceOf(Error)
+    ).rejects.toBeInstanceOf(MaxNumberOfCheckInsError)
   })
 
   it('should not be able to check in to distance gym', async () => {
@@ -76,7 +78,7 @@ describe('Check-in Use Case', () => {
         userLatitude: -21.303972,
         userLongitude: -46.727658,
       }),
-    ).rejects.toBeInstanceOf(Error)
+    ).rejects.toBeInstanceOf(MaxDistanceError)
   })
 
   it('should be able to check in to distance gym', async () => {

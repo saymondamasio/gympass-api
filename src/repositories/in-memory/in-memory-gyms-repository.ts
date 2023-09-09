@@ -22,8 +22,8 @@ export class InMemoryGymsRepository implements GymsRepository {
     const gym = {
       id: randomUUID(),
       name,
-      description: description || null,
-      phone: phone || null,
+      description: description ?? null,
+      phone: phone ?? null,
       latitude: new Decimal(latitude.toString()),
       longitude: new Decimal(longitude.toString()),
     }
