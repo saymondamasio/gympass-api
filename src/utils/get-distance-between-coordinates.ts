@@ -7,7 +7,6 @@ export function getDistanceBetweenCoordinates(
   from: Coordinate,
   to: Coordinate,
 ): number {
-  console.log(from, to)
   // DISTANCE IN METERS
   const R = 6371e3 // metres
   const φ1 = (from.latitude * Math.PI) / 180 // φ, λ in radians

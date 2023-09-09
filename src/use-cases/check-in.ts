@@ -52,8 +52,6 @@ export class CheckInUseCase {
 
     const MAX_DISTANCE_IN_METRES = 100
 
-    console.log(distanceBetweenUserAndGym, 'AQUUUUUUUU')
-
     if (distanceBetweenUserAndGym > MAX_DISTANCE_IN_METRES) {
       throw new MaxDistanceError()
     }
