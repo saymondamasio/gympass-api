@@ -12,6 +12,13 @@ export class InMemoryGymsRepository implements GymsRepository {
     return gymFound || null
   }
 
+  async searchMany(query: string, page: number) {
+    const gyms = this.gyms
+      .filter((gym) => gym.name.includes(query))
+      .splice((page - 1) * 20, page * 20)
+    return gyms
+  }
+
   async create({
     name,
     description,
