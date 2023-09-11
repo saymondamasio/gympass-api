@@ -1,9 +1,32 @@
 import { Gym, Prisma } from '@prisma/client'
 import { prisma } from '~/lib/prisma'
-import { GymsRepository } from '../gyms-repository'
+import { FindManyNearbyParams, GymsRepository } from '../gyms-repository'
 
 export class PrismaGymRepository implements GymsRepository {
-  async findById(id: string): Promise<Gym | null> {
+  async searchMany(query: string, page = 1) {
+    const gyms = await prisma.gym.findMany({
+      where: {
+        name: {
+          contains: query,
+        },
+      },
+      take: 20,
+      skip: (page - 1) * 20,
+    })
+
+    return gyms
+  }
+
+  async findManyNearby({ latitude, longitude }: FindManyNearbyParams) {
+    const gyms = await prisma.$queryRaw<Gym[]>`
+      SELECT * from gyms
+      WHERE ( 6371 * acos( cos( radians(${latitude}) ) * cos( radians( latitude ) ) * cos( radians( longitude ) - radians(${longitude}) ) + sin( radians(${latitude}) ) * sin( radians( latitude ) ) ) ) <= 10
+    `
+
+    return gyms
+  }
+
+  async findById(id: string) {
     const gym = await prisma.gym.findUnique({
       where: {
         id,
