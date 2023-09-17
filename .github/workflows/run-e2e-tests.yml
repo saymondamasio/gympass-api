@@ -12,10 +12,10 @@ jobs:
         image: bitnami/postgresql
         ports:
           - 5432:5432
-        environment:
-          - POSTGRESQL_DATABASE=${{ secrets.DATABASE_NAME }}
-          - POSTGRESQL_USER=${{ secrets.DATABASE_USER }}
-          - POSTGRESQL_PASSWORD=${{ secrets.DATABASE_PASSWORD }}
+        env:
+          POSTGRESQL_DATABASE: ${{ secrets.DATABASE_NAME }}
+          POSTGRESQL_USER: ${{ secrets.DATABASE_USER }}
+          POSTGRESQL_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}
 
     steps:
       - uses: actions/checkout@v3
