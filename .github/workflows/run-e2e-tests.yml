@@ -1,0 +1,39 @@
+name: Run E2E Tests
+
+on: [pull_request]
+
+jobs: 
+  run-unit-tests:
+    name: Run E2E Tests
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: bitnami/postgresql
+        ports:
+          - 5432:5432
+        environment:
+          - POSTGRESQL_DATABASE=${{ secrets.DATABASE_NAME }}
+          - POSTGRESQL_USER=${{ secrets.DATABASE_USER }}
+          - POSTGRESQL_PASSWORD=${{ secrets.DATABASE_PASSWORD }}
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: 'pnpm'
+
+      - run: pnpm i
+      
+      - run: pnpm test:e2e
+        env:
+          JWT_SECRET: ${{ secrets.JWT_SECRET }}
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          JWT_EXPIRES_IN: ${{ secrets.JWT_EXPIRES_IN }}
+
