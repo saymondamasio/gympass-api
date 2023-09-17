@@ -29,7 +29,7 @@ describe('Validate Check-in Use Case', () => {
     })
 
     const { checkIn } = await validateCheckInUseCase.execute({
-      checkId: createdCheckIn.id,
+      checkInId: createdCheckIn.id,
     })
 
     expect(checkIn.validated_at).toEqual(expect.any(Date))
@@ -38,7 +38,7 @@ describe('Validate Check-in Use Case', () => {
   it('should not be able to validate an ine check-in', async () => {
     await expect(
       validateCheckInUseCase.execute({
-        checkId: 'invalid_id',
+        checkInId: 'invalid_id',
       }),
     ).rejects.toBeInstanceOf(ResourceNotFoundError)
   })
@@ -56,7 +56,7 @@ describe('Validate Check-in Use Case', () => {
 
     await expect(
       validateCheckInUseCase.execute({
-        checkId: createdCheckIn.id,
+        checkInId: createdCheckIn.id,
       }),
     ).rejects.toBeInstanceOf(LateCheckInValidationError)
   })

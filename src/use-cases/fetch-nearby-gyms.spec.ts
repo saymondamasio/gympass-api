@@ -1,16 +1,10 @@
 import { InMemoryGymsRepository } from '~/repositories/in-memory/in-memory-gyms-repository'
-import { CheckInUseCase } from './check-in'
-import { InMemoryCheckInsRepository } from '~/repositories/in-memory/in-memory-check-ins-repository'
 import { Gym } from '@prisma/client'
-import { MaxNumberOfCheckInsError } from './errors/max-numbers-of-check-ins-error'
-import { MaxDistanceError } from './errors/max-distance-error'
-import { SearchGymsUseCase } from './search-gyms'
 import { expect } from 'vitest'
 import { FetchNearbyGymsUseCase } from './fetch-nearby-gyms'
 
 let inMemoryGymsInsRepository: InMemoryGymsRepository
 let fetchNearbyGymsUseCase: FetchNearbyGymsUseCase
-let gym: Gym
 
 describe('Fetch Nearby Gyms Use Case', () => {
   beforeEach(async () => {
