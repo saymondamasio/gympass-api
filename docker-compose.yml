@@ -6,7 +6,7 @@ services:
     ports:
       - 5432:5432
     environment:
-      - POSTGRESQL_DATABASE=api-gympass
-      - POSTGRESQL_USER=docker
-      - POSTGRESQL_PASSWORD=docker
+      - POSTGRESQL_DATABASE=${DATABASE_NAME}
+      - POSTGRESQL_USER=${DATABASE_USER}
+      - POSTGRESQL_PASSWORD=${DATABASE_PASSWORD}
     
