@@ -30,6 +30,8 @@ jobs:
           cache: 'pnpm'
 
       - run: pnpm i
+
+      - run: pnpm prisma generate
       
       - run: pnpm test:e2e
         env:
