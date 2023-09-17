@@ -11,6 +11,7 @@ if (process.env.NODE_ENV) {
 const envSchema = z.object({
   PORT: z.number().default(3333),
   JWT_SECRET: z.string(),
+  JWT_EXPIRES_IN: z.string(),
   NODE_ENV: z.enum(['dev', 'production', 'test']).default('dev'),
 })
 
